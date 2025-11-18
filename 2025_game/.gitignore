@@ -1,3 +1,4 @@
+# ===== Unity Generated Folders =====
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
@@ -7,12 +8,13 @@ UserSettings/
 Logs/
 MemoryCaptures/
 
-# Rider/VS
+# ===== IDE Files =====
 .vs/
 *.csproj
 *.sln
 *.user
 *.userprefs
 
-# Unity Asset Store
+# ===== Unity Asset Store (Tool packages) =====
 Assets/AssetStoreTools*
+
