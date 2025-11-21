@@ -1,0 +1,64 @@
+# ======================================
+# Unity Generated Folders (절대 올리면 안 됨)
+# ======================================
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+UserSettings/
+
+# Unity Cache
+/[Uu]serSettings/
+/[Ll]ibrary/
+/[Tt]emp/
+
+# ======================================
+# OS / IDE Files
+# ======================================
+.DS_Store
+Thumbs.db
+
+# Visual Studio
+.vs/
+*.csproj
+*.sln
+*.user
+*.userprefs
+
+# VSCode
+.vscode/
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# ======================================
+# Unity Asset Store Tools (원하면 포함 가능 → Ju는 포함)
+# Assets/AssetStoreTools*    <-- 주석 처리함
+
+# ======================================
+# Build Artifacts
+# ======================================
+*.apk
+*.aab
+*.exe
+*.app
+
+# Crash logs
+*.stacktrace
+
+# Packages
+*.unitypackage
+
+# ======================================
+# Ignore Auto-generated TMP files
+# ======================================
+Assets/TextMesh Pro*/Resources/*.asset
+
+# ======================================
+# 기타
+# ======================================
+sysinfo.txt
