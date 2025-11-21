@@ -10,18 +10,23 @@ public class GunShoot : MonoBehaviour
     public GameObject HitEffect;
 
     public Recoil recoil;
-    public AmmoSystem ammo;       // ★ 추가됨
+    public AmmoSystem ammo;
+
+    public bool canShootFromStart = true; // ★ 새로 추가됨
 
     float nextTimeToFire = 0f;
 
     void Update()
     {
+        if (!canShootFromStart)
+            return;   // ★ 카운트다운 중이면 절대 발사 불가
+
         if (Input.GetButton("Fire1") &&
             Time.time >= nextTimeToFire &&
             recoil != null &&
             recoil.CanShoot &&
             ammo != null &&
-            ammo.HasAmmo())   // ★ 탄약 체크
+            ammo.HasAmmo())
         {
             nextTimeToFire = Time.time + 1f / FireRate;
             Shoot();
@@ -30,18 +35,14 @@ public class GunShoot : MonoBehaviour
 
     void Shoot()
     {
-        // ★ 탄약 소모
         ammo.ConsumeAmmo();
 
-        // ★ 반동 적용
         if (recoil != null)
             recoil.ApplyRecoil();
 
-        // 총구 이펙트
         if (GunFlash != null)
             GunFlash.Play();
 
-        // 레이캐스트
         Ray ray = FpsCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f));
         RaycastHit hit;
 

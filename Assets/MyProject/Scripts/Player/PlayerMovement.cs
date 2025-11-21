@@ -1,10 +1,13 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
     public float speed = 6f;
     public float gravity = -9.81f;
+
+    // â­ ì™¸ë¶€ì—ì„œ ì œì–´í•  ìˆ˜ ìˆëŠ” ìŠ¤ìœ„ì¹˜ ì¶”ê°€
+    public bool canMove = true;
 
     CharacterController controller;
     Vector3 velocity;
@@ -16,27 +19,25 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        float x = Input.GetAxis("Horizontal"); // A/D
-        float z = Input.GetAxis("Vertical");   // W/S
+        // â­ ìŠ¤ìœ„ì¹˜ê°€ ì¼œì ¸ ìˆì„ ë•Œë§Œ í‚¤ë³´ë“œ ì…ë ¥ì„ ë°›ìŒ
+        // êº¼ì ¸ìˆìœ¼ë©´ 0ì´ ë˜ì–´ ì›€ì§ì´ì§€ ì•ŠìŒ
+        float x = canMove ? Input.GetAxis("Horizontal") : 0;
+        float z = canMove ? Input.GetAxis("Vertical") : 0;
 
-        // Player ¹æÇâ ±âÁØÀ¸·Î ¿òÁ÷ÀÓ
         Vector3 move = transform.right * x + transform.forward * z;
         controller.Move(move * speed * Time.deltaTime);
 
-        // Áö¸é Ã¼Å©
-        if (controller.isGrounded && velocity.y < 0)
+        // --- ì¤‘ë ¥ ì½”ë“œëŠ” ì¡°ê±´ë¬¸ ë°–ì—ì„œ í•­ìƒ ì‹¤í–‰ë¨ (ì´ì œ ê³µì¤‘ë¶€ì–‘ ì•ˆ í•¨!) ---
+        if (controller.isGrounded)
         {
-            velocity.y = -2f;   // ¹Ù´Ú¿¡ ºÙÀÌ´Â ¿ªÇÒ¸¸ ³²±è
+            if (velocity.y < 0)
+                velocity.y = -2f;
+        }
+        else
+        {
+            velocity.y += gravity * Time.deltaTime;
         }
 
-        // Á¡ÇÁ Á¦°ÅµÊ
-        // if (Input.GetButtonDown("Jump") && controller.isGrounded)
-        // {
-        //     velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        // }
-
-        // Áß·Â Àû¿ë
-        velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
 }
