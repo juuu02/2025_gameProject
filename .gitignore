@@ -1,5 +1,5 @@
 # ======================================
-# Unity Generated Folders (절대 올리면 안 됨)
+# Unity Generated Folders (절대 올리지 말기)
 # ======================================
 [Ll]ibrary/
 [Tt]emp/
@@ -36,8 +36,8 @@ Thumbs.db
 *.sln.iml
 
 # ======================================
-# Unity Asset Store Tools (원하면 포함 가능 → Ju는 포함)
-# Assets/AssetStoreTools*    <-- 주석 처리함
+# Unity Asset Store Tools (Ju: 포함 원함 → 주석 유지)
+# Assets/AssetStoreTools*
 
 # ======================================
 # Build Artifacts
@@ -62,3 +62,9 @@ Assets/TextMesh Pro*/Resources/*.asset
 # 기타
 # ======================================
 sysinfo.txt
+
+# ======================================
+# Ju Custom: ThirdParty 외부 에셋은 무조건 Git에 포함
+# ======================================
+!Assets/ThirdParty/
+!Assets/ThirdParty/**
