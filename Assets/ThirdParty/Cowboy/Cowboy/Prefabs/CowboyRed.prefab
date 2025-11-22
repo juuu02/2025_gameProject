@@ -198,12 +198,12 @@ GameObject:
   m_Component:
   - component: {fileID: 413848}
   - component: {fileID: 9556666}
-  - component: {fileID: -8375668557588115017}
-  - component: {fileID: -2586474136188453359}
-  - component: {fileID: 7644727934988493862}
-  - component: {fileID: 2334593662122169993}
+  - component: {fileID: -5830480824582049942}
+  - component: {fileID: -2920948934533334000}
+  - component: {fileID: -1528405591685521221}
+  - component: {fileID: -365570913283986301}
   m_Layer: 0
-  m_Name: Cowboy
+  m_Name: CowboyRed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -248,7 +248,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!54 &-8375668557588115017
+--- !u!54 &-5830480824582049942
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -275,7 +275,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!136 &-2586474136188453359
+--- !u!114 &-2920948934533334000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 496e01c838f936641af64838bdfa1c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+--- !u!136 &-1528405591685521221
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -298,20 +311,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &7644727934988493862
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 112068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 496e01c838f936641af64838bdfa1c1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
---- !u!195 &2334593662122169993
+--- !u!195 &-365570913283986301
 NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1253,7 +1253,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c875d2d85605699469e14fc0b88a518e, type: 2}
+  - {fileID: 2100000, guid: 8ec509af227a34646a0c6bc21bb52c66, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
