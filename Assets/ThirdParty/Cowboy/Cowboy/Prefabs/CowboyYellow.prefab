@@ -200,10 +200,10 @@ GameObject:
   - component: {fileID: 9556666}
   - component: {fileID: -8375668557588115017}
   - component: {fileID: -2586474136188453359}
-  - component: {fileID: 7644727934988493862}
-  - component: {fileID: 2334593662122169993}
+  - component: {fileID: -907962560626228028}
+  - component: {fileID: -1994802628028379140}
   m_Layer: 0
-  m_Name: Cowboy
+  m_Name: CowboyYellow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -298,7 +298,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &7644727934988493862
+--- !u!114 &-907962560626228028
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -311,7 +311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
---- !u!195 &2334593662122169993
+--- !u!195 &-1994802628028379140
 NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1253,7 +1253,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c875d2d85605699469e14fc0b88a518e, type: 2}
+  - {fileID: 2100000, guid: d8f93a0705de31e40a595335701e2e41, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
