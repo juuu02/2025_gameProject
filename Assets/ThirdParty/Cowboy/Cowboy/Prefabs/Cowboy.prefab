@@ -200,7 +200,6 @@ GameObject:
   - component: {fileID: 9556666}
   - component: {fileID: -8375668557588115017}
   - component: {fileID: -2586474136188453359}
-  - component: {fileID: 7644727934988493862}
   - component: {fileID: 2334593662122169993}
   m_Layer: 0
   m_Name: Cowboy
@@ -298,19 +297,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &7644727934988493862
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 112068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 496e01c838f936641af64838bdfa1c1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
 --- !u!195 &2334593662122169993
 NavMeshAgent:
   m_ObjectHideFlags: 0
