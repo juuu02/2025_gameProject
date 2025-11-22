@@ -48,6 +48,15 @@ public class GunShoot : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 100f))
         {
+            // ⭐ 1) 적인지 확인
+            EnemyHealth enemy = hit.collider.GetComponent<EnemyHealth>();
+            if (enemy != null)
+            {
+                // ⭐ 2) 데미지 주기
+                enemy.TakeDamage(Damage);
+            }
+
+            // 기존 히트 이펙트
             if (HitEffect != null)
                 Instantiate(HitEffect, hit.point, Quaternion.LookRotation(hit.normal));
         }

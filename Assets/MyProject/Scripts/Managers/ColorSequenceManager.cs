@@ -20,10 +20,11 @@ public class ColorSequenceManager : MonoBehaviour
             cube.material.color = Color.white;
 
         // 기본 4색 설정
-        _baseColors[0] = Color.red;
-        _baseColors[1] = Color.blue;
-        _baseColors[2] = new Color(0.6f, 0.2f, 0.8f); // purple
-        _baseColors[3] = new Color(0.6f, 1f, 0.4f);   // lightgreen
+        _baseColors[0] = Color.red;              // 빨강
+        _baseColors[1] = Color.blue;             // 파랑
+        _baseColors[2] = Color.yellow;           // 노랑 (보라색 → 변경 완료)
+        _baseColors[3] = Color.green;            // 초록 (lightgreen → 초록으로 변경)
+
     }
 
     private void Start()
