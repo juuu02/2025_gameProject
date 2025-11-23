@@ -9,13 +9,18 @@ public class CowBoy_control : MonoBehaviour
     private bool hasArrived = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        float targetXCenter = (-21.0f + 21.0f) / 2f;
-        Vector3 targetPosition = new Vector3(targetXCenter, 2.0f, -50.0f);
-        agent.SetDestination(targetPosition);
+    }
+
+    public void SetDestinationTarget(Vector3 target)
+    {
+        if (agent != null)
+        {
+            agent.SetDestination(target);
+        }
     }
 
     private void OnCollisionEnter(Collision coll)
@@ -32,6 +37,8 @@ public class CowBoy_control : MonoBehaviour
 
             if (animator != null)
             {
+                this.transform.rotation = Quaternion.Euler(0, 180, 0);
+                this.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
                 animator.SetBool("Fire", true);
             }
         }
