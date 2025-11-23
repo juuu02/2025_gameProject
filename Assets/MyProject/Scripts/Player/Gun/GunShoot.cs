@@ -12,14 +12,18 @@ public class GunShoot : MonoBehaviour
     public Recoil recoil;
     public AmmoSystem ammo;
 
-    public bool canShootFromStart = true; // ★ 새로 추가됨
+    public bool canShootFromStart = true;
+
+    // 🔫 총소리 재생용
+    public AudioSource audioSource;
+    public AudioClip fireSFX;
 
     float nextTimeToFire = 0f;
 
     void Update()
     {
         if (!canShootFromStart)
-            return;   // ★ 카운트다운 중이면 절대 발사 불가
+            return;
 
         if (Input.GetButton("Fire1") &&
             Time.time >= nextTimeToFire &&
@@ -43,20 +47,21 @@ public class GunShoot : MonoBehaviour
         if (GunFlash != null)
             GunFlash.Play();
 
+        // 🔥 여기 추가: 총소리
+        if (audioSource != null && fireSFX != null)
+            audioSource.PlayOneShot(fireSFX);
+
         Ray ray = FpsCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f));
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, 100f))
         {
-            // ⭐ 1) 적인지 확인
             EnemyHealth enemy = hit.collider.GetComponent<EnemyHealth>();
             if (enemy != null)
             {
-                // ⭐ 2) 데미지 주기
                 enemy.TakeDamage(Damage);
             }
 
-            // 기존 히트 이펙트
             if (HitEffect != null)
                 Instantiate(HitEffect, hit.point, Quaternion.LookRotation(hit.normal));
         }
