@@ -3,6 +3,13 @@
 public class Enemy : MonoBehaviour
 {
     public bool IsDead = false;
+    public Color EnemyColor;
+    private EnemyManager _manager;
+
+    private void Awake()
+    {
+        _manager = FindFirstObjectByType<EnemyManager>();
+    }
 
     // 기본 초기화
     public void ResetEnemy()
@@ -11,13 +18,16 @@ public class Enemy : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    // 적을 죽일 때
-    public void Die()
+    public void DieSuccess()
     {
         IsDead = true;
         gameObject.SetActive(false);
 
-        // 적 하나 죽을 때 EnemyManager에게 보고
-        FindObjectOfType<EnemyManager>().CheckAllEnemiesDead();
+        _manager.CheckAllEnemiesDead();
+    }
+
+    public void OnHit()
+    {
+        _manager.EnemyHit(this);
     }
 }

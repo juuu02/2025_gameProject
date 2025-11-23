@@ -202,6 +202,7 @@ GameObject:
   - component: {fileID: -2586474136188453359}
   - component: {fileID: 6815908886675302416}
   - component: {fileID: -7802041397740121282}
+  - component: {fileID: 6268679402858297211}
   m_Layer: 0
   m_Name: CowboyGreen
   m_TagString: Untagged
@@ -333,6 +334,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &6268679402858297211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a28478bcfb420f4ca479e4fa01866e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsDead: 0
 --- !u!1 &114516
 GameObject:
   m_ObjectHideFlags: 0

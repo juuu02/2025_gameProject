@@ -6,12 +6,6 @@ public class CowBoy_control : MonoBehaviour
     private NavMeshAgent agent;
     private Animator animator;
     public float speed = 5.0f;
-    private float targetXMin = -21.0f;
-    private float targetXMax = 21.0f;
-    private float targetY = 2.0f;
-    private float targetZ = -18.0f;
-    private float yTolerance = 1.0f;
-    private float zTolerance = 0.5f;
     private bool hasArrived = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -19,18 +13,19 @@ public class CowBoy_control : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        float targetXCenter = (targetXMin + targetXMax) / 2f;
-        Vector3 targetPosition = new Vector3(targetXCenter, 2.0f, targetZ);
+        float targetXCenter = (-21.0f + 21.0f) / 2f;
+        Vector3 targetPosition = new Vector3(targetXCenter, 2.0f, -50.0f);
         agent.SetDestination(targetPosition);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnCollisionEnter(Collision coll)
     {
-        if (hasArrived)
+        if (hasArrived) 
             return;
+        
+        GameObject other = coll.gameObject;
 
-        if (IsInRange())
+        if (other.CompareTag("RiverBarrier") || other.name == "RiverBarrier")
         {
             hasArrived = true;
             agent.isStopped = true;
@@ -40,16 +35,5 @@ public class CowBoy_control : MonoBehaviour
                 animator.SetBool("Fire", true);
             }
         }
-    }
-
-    bool IsInRange()
-    {
-        bool inXRange = transform.position.x >= targetXMin &&
-                        transform.position.x <= targetXMax;
-        bool inYRange = Mathf.Abs(transform.position.y - targetY) <= yTolerance;
-        bool inZRange = Mathf.Abs(transform.position.z - targetZ) <= zTolerance;
-        bool nearTarget = agent.remainingDistance < 5f; 
-
-        return nearTarget && inXRange && inYRange && inZRange;
     }
 }
