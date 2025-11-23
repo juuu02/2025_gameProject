@@ -7097,7 +7097,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2af872d36c6011e46868bc6b9a40844f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FireRate: 30
+  FireRate: 10
   Damage: 100
   FpsCamera: {fileID: 1345284411}
   GunFlash: {fileID: 612017982}
@@ -7133,8 +7133,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d32f4a365969694dbce2d7c15faf966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAmmo: 30
-  currentAmmo: 30
+  maxAmmo: 10
+  currentAmmo: 10
   AmmoText: {fileID: 159658152}
   gun: {fileID: 2128220988}
 --- !u!33 &2046582323684988
