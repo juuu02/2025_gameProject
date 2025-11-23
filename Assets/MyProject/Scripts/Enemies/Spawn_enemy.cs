@@ -11,6 +11,10 @@ public class Spawn_enemy : MonoBehaviour
     public Vector3 positionC = new Vector3(0f, 5.86f, 3.84f);
     public Vector3 positionD = new Vector3(-0.5f, 5.86f, -10.5f);
 
+    public float targetXMin = -21.0f;
+    public float targetXMax = 21.0f;
+    public float targetZ = -50.0f;
+
     private GameObject[] GetShuffledEnemyArray()
     {
         List<GameObject> enemyList = new List<GameObject>(enemyPrefab);
@@ -29,21 +33,28 @@ public class Spawn_enemy : MonoBehaviour
 
     public void SpawnAllEnemies()
     {
-        // 1. 모든 스폰 위치를 배열에 저장합니다.
         Vector3[] spawnPositions = new Vector3[] { positionA, positionB, positionC, positionD };
 
-        // 2. 중복 없는 랜덤 순서로 섞인 적 프리팹 배열을 가져옵니다.
         GameObject[] shuffledEnemyArray = GetShuffledEnemyArray();
 
-        // 3. 섞인 적 배열의 길이만큼 반복합니다.
         for (int i = 0; i < shuffledEnemyArray.Length; i++)
         {
             GameObject enemyToSpawn = shuffledEnemyArray[i];
 
-            // 4. 스폰 위치를 배열 순서대로 사용하거나 랜덤으로 선택합니다. (기존 코드를 따름)
             Vector3 spawnPos = (i < spawnPositions.Length) ? spawnPositions[i] : spawnPositions[0];
 
-            Instantiate(enemyToSpawn, spawnPos, transform.rotation);
+            GameObject spawnedEnemy = Instantiate(enemyToSpawn, spawnPos, transform.rotation);
+
+            float randomTargetX = Random.Range(targetXMin, targetXMax);
+
+            Vector3 targetVector = new Vector3(randomTargetX, spawnPos.y, targetZ);
+
+            CowBoy_control control = spawnedEnemy.GetComponent<CowBoy_control>();
+
+            if (control != null)
+            {
+                control.SetDestinationTarget(targetVector);
+            }
         }
     }
 }
