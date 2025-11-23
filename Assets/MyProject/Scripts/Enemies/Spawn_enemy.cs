@@ -1,16 +1,17 @@
-using System.Linq;
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawn_enemy : MonoBehaviour
 {
     public GameObject[] enemyPrefab;
-    public float spawnInterval = 2.0f;
     public Vector3 positionA = new Vector3(5.89f, 5.54f, 14.76f);
     public Vector3 positionB = new Vector3(-8.6f, 5.86f, 3.84f);
     public Vector3 positionC = new Vector3(0f, 5.86f, 3.84f);
     public Vector3 positionD = new Vector3(-0.5f, 5.86f, -10.5f);
 
+    // -------------------------------
+    // ëœë¤ ì…”í”Œ í•¨ìˆ˜
+    // -------------------------------
     private GameObject[] GetShuffledEnemyArray()
     {
         List<GameObject> enemyList = new List<GameObject>(enemyPrefab);
@@ -24,26 +25,44 @@ public class Spawn_enemy : MonoBehaviour
             enemyList[k] = enemyList[n];
             enemyList[n] = value;
         }
+
         return enemyList.ToArray();
     }
 
+    // -------------------------------
+    // í•µì‹¬: ì¸ìŠ¤í„´ìŠ¤ ìƒì„± + EnemyManagerì— Clone ì „ë‹¬
+    // -------------------------------
     public void SpawnAllEnemies()
     {
-        // 1. ¸ğµç ½ºÆù À§Ä¡¸¦ ¹è¿­¿¡ ÀúÀåÇÕ´Ï´Ù.
         Vector3[] spawnPositions = new Vector3[] { positionA, positionB, positionC, positionD };
 
-        // 2. Áßº¹ ¾ø´Â ·£´ı ¼ø¼­·Î ¼¯ÀÎ Àû ÇÁ¸®ÆÕ ¹è¿­À» °¡Á®¿É´Ï´Ù.
+        // ì„ì¸ í”„ë¦¬íŒ¹ ëª©ë¡
         GameObject[] shuffledEnemyArray = GetShuffledEnemyArray();
 
-        // 3. ¼¯ÀÎ Àû ¹è¿­ÀÇ ±æÀÌ¸¸Å­ ¹İº¹ÇÕ´Ï´Ù.
+        // ì‹¤ì œ Cloneë“¤ì„ ì €ì¥í•  ë°°ì—´
+        GameObject[] spawnedEnemies = new GameObject[shuffledEnemyArray.Length];
+
         for (int i = 0; i < shuffledEnemyArray.Length; i++)
         {
             GameObject enemyToSpawn = shuffledEnemyArray[i];
-
-            // 4. ½ºÆù À§Ä¡¸¦ ¹è¿­ ¼ø¼­´ë·Î »ç¿ëÇÏ°Å³ª ·£´ıÀ¸·Î ¼±ÅÃÇÕ´Ï´Ù. (±âÁ¸ ÄÚµå¸¦ µû¸§)
             Vector3 spawnPos = (i < spawnPositions.Length) ? spawnPositions[i] : spawnPositions[0];
 
-            Instantiate(enemyToSpawn, spawnPos, transform.rotation);
+            // Instantiate Clone ìƒì„±
+            GameObject clone = Instantiate(enemyToSpawn, spawnPos, transform.rotation);
+
+            // Clone ì €ì¥
+            spawnedEnemies[i] = clone;
+        }
+
+        // â­ EnemyManagerì—ê²Œ Clone ë°°ì—´ ë„˜ê¸°ê¸°
+        EnemyManager manager = FindFirstObjectByType<EnemyManager>();
+        if (manager != null)
+        {
+            manager.SetupEnemiesWithClones(spawnedEnemies);
+        }
+        else
+        {
+            Debug.LogError("âŒ EnemyManagerë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤!");
         }
     }
 }

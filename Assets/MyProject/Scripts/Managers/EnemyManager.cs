@@ -2,49 +2,98 @@
 
 public class EnemyManager : MonoBehaviour
 {
-    public GameObject[] Enemies;
+    public GameObject[] Enemies;   // Spawn된 Enemy Clone들
     private int _sequenceIndex = 0;
+
     private ColorSequenceManager _colorManager;
+
+    private RoundManager _roundManager;   // 라운드 종료 호출용
 
     private void Awake()
     {
         _colorManager = FindFirstObjectByType<ColorSequenceManager>();
+        _roundManager = FindFirstObjectByType<RoundManager>();
+
+        if (_colorManager == null)
+            Debug.LogError("❌ EnemyManager: ColorSequenceManager를 찾을 수 없습니다!");
+        if (_roundManager == null)
+            Debug.LogError("❌ EnemyManager: RoundManager를 찾을 수 없습니다!");
     }
 
-    public void SetupEnemies(int round)
+    // ⭐ Spawn_enemy에서 호출됨
+    public void SetupEnemiesWithClones(GameObject[] clones)
+    {
+        Enemies = clones;
+        SetupEnemies();
+    }
+
+    // ⭐ 색 적용 + 정답 순서 리셋
+    private void SetupEnemies()
     {
         _sequenceIndex = 0;
 
-        foreach (var enemy in Enemies)
+        if (Enemies == null || Enemies.Length != 4)
         {
-            enemy.SetActive(true);
-            enemy.GetComponent<Enemy>().ResetEnemy(); 
+            Debug.LogError("❌ EnemyManager: Enemies 배열이 비어있거나 4개가 아닙니다!");
+            return;
+        }
+
+        Color[] colors = _colorManager.GetShuffledColors();
+
+        for (int i = 0; i < Enemies.Length; i++)
+        {
+            GameObject enemyObj = Enemies[i];
+            Enemy enemy = enemyObj.GetComponent<Enemy>();
+
+            enemyObj.SetActive(true);
+            enemy.ResetEnemy();
+
+            // 정답용 색 저장
+            enemy.EnemyColor = colors[i];
+
+            // 실제 외형 색 적용
+            ApplyColorToEnemy(enemyObj, colors[i]);
+
+            // 정답 순서 인덱스 부여
+            enemy.OrderIndex = i;
         }
     }
 
+    private void ApplyColorToEnemy(GameObject enemyObj, Color c)
+    {
+        SkinnedMeshRenderer mesh = enemyObj.GetComponentInChildren<SkinnedMeshRenderer>();
+        if (mesh != null)
+        {
+            mesh.material.color = c;
+            return;
+        }
+
+        Renderer r = enemyObj.GetComponentInChildren<Renderer>();
+        if (r != null)
+            r.material.color = c;
+    }
+
+    // ⭐ 총알이 Enemy 맞으면 호출됨
     public void EnemyHit(Enemy enemyHit)
     {
         Color requiredColor = _colorManager.GetColorAtIndex(_sequenceIndex);
 
-        Color enemyColor = enemyHit.EnemyColor;
-
-        if (enemyColor.Equals(requiredColor))
+        if (enemyHit.EnemyColor == requiredColor)
         {
+            // 정답
             enemyHit.DieSuccess();
-
             _sequenceIndex++;
 
-            if (_sequenceIndex >= _colorManager._cubes.Length)
+            if (_sequenceIndex >= 4)
             {
-                Debug.Log("모든 색상 순서를 맞췄습니다! 다음 라운드로 넘어갈 수 있습니다.");
+                Debug.Log("🎉 모든 순서를 정확히 맞췄습니다!");
+                _roundManager.OnAllEnemiesDefeated();
             }
         }
-        else
-        {
-            Debug.Log("잘못된 색상을 맞췄습니다! 다시 시도하세요.");
-        }
+     
     }
 
+    // Enemy가 개별적으로 죽을 때마다 호출될 수도 있음
     public void CheckAllEnemiesDead()
     {
         foreach (var enemy in Enemies)
@@ -53,7 +102,6 @@ public class EnemyManager : MonoBehaviour
                 return;
         }
 
-        // 모든 적이 죽었으면 RoundManager로 보고
-        FindFirstObjectByType<RoundManager>().OnAllEnemiesDefeated();
+        _roundManager.OnAllEnemiesDefeated();
     }
 }

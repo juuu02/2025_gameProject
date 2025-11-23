@@ -22,14 +22,10 @@ public class RoundManager : MonoBehaviour
 
         _roundActive = true;
 
-        // ♻ 색상 재셔플
+        // 1) 색 빠르게 섞기
         ColorManager.ShuffleAndApply();
 
-        // ♻ 적 리셋 / 재배치
-        if (EnemyManager != null)
-            EnemyManager.SetupEnemies(CurrentRound);
 
-        // UI 표시 (라운드 번호)
         RoundUI();
     }
 

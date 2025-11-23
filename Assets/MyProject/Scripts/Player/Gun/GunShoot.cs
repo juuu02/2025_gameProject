@@ -14,7 +14,6 @@ public class GunShoot : MonoBehaviour
 
     public bool canShootFromStart = true;
 
-    // 🔫 총소리 재생용
     public AudioSource audioSource;
     public AudioClip fireSFX;
 
@@ -47,23 +46,29 @@ public class GunShoot : MonoBehaviour
         if (GunFlash != null)
             GunFlash.Play();
 
-        // 🔥 여기 추가: 총소리
         if (audioSource != null && fireSFX != null)
             audioSource.PlayOneShot(fireSFX);
+
+        // ⭐ IgnoreBullet 레이어는 제외
+        int layerMask = ~LayerMask.GetMask("IgnoreBullet");
 
         Ray ray = FpsCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f));
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, 100f))
+        if (Physics.Raycast(ray, out hit, 500f, layerMask))
         {
-            EnemyHealth enemy = hit.collider.GetComponent<EnemyHealth>();
+            // ⭐ Collider 없어도 적을 찾도록 변경된 부분
+            EnemyHealth enemy = hit.transform.GetComponentInParent<EnemyHealth>();
+
             if (enemy != null)
             {
                 enemy.TakeDamage(Damage);
             }
 
             if (HitEffect != null)
+            {
                 Instantiate(HitEffect, hit.point, Quaternion.LookRotation(hit.normal));
+            }
         }
     }
 }
