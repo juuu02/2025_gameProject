@@ -3,8 +3,8 @@
 public class RoundManager : MonoBehaviour
 {
     [Header("Managers")]
-    public ColorSequenceManager ColorManager;   // 큐브 색상 관리
-    public EnemyManager EnemyManager;           // 적 생성/관리 (나중에 만들 스크립트)
+    public ColorSequenceManager ColorManager;
+    public EnemyManager EnemyManager;
 
     [Header("Round Info")]
     public int CurrentRound = 1;
@@ -22,9 +22,14 @@ public class RoundManager : MonoBehaviour
 
         _roundActive = true;
 
-        // 1) 색 빠르게 섞기
+        // 1) 큐브 색상(인덱스) 섞기
         ColorManager.ShuffleAndApply();
 
+        // 2) 섞인 인덱스 배열 가져오기  (예: [3,0,2,1])
+        int[] correctSequence = ColorManager.GetShuffledIndices();
+
+        // 3) EnemyManager에게 정답 전달
+        EnemyManager.SetCorrectSequence(correctSequence);
 
         RoundUI();
     }
@@ -37,17 +42,14 @@ public class RoundManager : MonoBehaviour
 
         _roundActive = false;
 
-        // 라운드 증가
         CurrentRound++;
 
-        // 다음 라운드 시작
         StartRound();
     }
 
     private void RoundUI()
     {
         Debug.Log($"현재 라운드: {CurrentRound}");
-        // 나중에 화면에 숫자 표시 가능
     }
 
     // EnemyManager가 모든 적 사망 시 호출

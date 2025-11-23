@@ -9,30 +9,29 @@ public class ColorSequenceManager : MonoBehaviour
     public Renderer Cube4;
 
     private Renderer[] _cubes;
-    private readonly Color[] _baseColors = new Color[4];
-    private Color[] _shuffledColors = new Color[4];
+
+    // 🔥 Ju 색상 인덱스 규칙
+    // 0=Red, 1=Yellow, 2=Green, 3=Blue
+    private readonly Color[] ColorByIndex = new Color[4]
+    {
+        Color.red,
+        Color.yellow,
+        Color.green,
+        Color.blue
+    };
+
+    // 🔥 Cube에 들어가는 정답 인덱스 배열
+    private int[] _shuffledIndices = new int[4];
 
     private void Awake()
     {
-        // 4개 큐브 자동 배열
         _cubes = new Renderer[] { Cube1, Cube2, Cube3, Cube4 };
 
-        // null 체크
-        for (int i = 0; i < _cubes.Length; i++)
+        for (int i = 0; i < 4; i++)
         {
             if (_cubes[i] == null)
-                Debug.LogError($"❌ ColorSequenceManager: Cube{i + 1}가 연결되지 않았습니다!");
+                Debug.LogError($"❌ Cube{i + 1}가 연결되지 않았습니다!");
         }
-
-        // 기본 큐브 색상 흰색 초기화
-        foreach (var cube in _cubes)
-            cube.material.color = Color.white;
-
-        // 기본 4색 설정 (Ju가 말한 순서대로)
-        _baseColors[0] = Color.red;      // 빨강
-        _baseColors[1] = Color.blue;     // 파랑
-        _baseColors[2] = Color.yellow;   // 노랑
-        _baseColors[3] = Color.green;    // 초록
     }
 
     private void Start()
@@ -40,44 +39,39 @@ public class ColorSequenceManager : MonoBehaviour
         ShuffleAndApply();
     }
 
-    // ⭐ 매 라운드마다 호출
+    // ⭐ 매 라운드마다 Cube 인덱스를 셔플
     public void ShuffleAndApply()
     {
-        // _baseColors 복사
-        Color[] shuffled = (Color[])_baseColors.Clone();
+        // 0~3 인덱스 기반 셔플
+        int[] indices = new int[] { 0, 1, 2, 3 };
 
-        // Fisher-Yates Shuffle
-        for (int i = 0; i < shuffled.Length; i++)
+        for (int i = 0; i < 4; i++)
         {
-            int rnd = Random.Range(i, shuffled.Length);
-            (shuffled[i], shuffled[rnd]) = (shuffled[rnd], shuffled[i]);
+            int rnd = Random.Range(i, 4);
+            (indices[i], indices[rnd]) = (indices[rnd], indices[i]);
         }
 
-        _shuffledColors = shuffled;
+        _shuffledIndices = indices;
 
-        // 큐브에 색 적용
-        for (int i = 0; i < _cubes.Length; i++)
-            _cubes[i].material.color = _shuffledColors[i];
-
-        // 디버그용
-        Debug.Log($"Shuffled Colors: {_shuffledColors[0]}, {_shuffledColors[1]}, {_shuffledColors[2]}, {_shuffledColors[3]}");
-    }
-
-    // 특정 인덱스 색상 가져오기
-    public Color GetColorAtIndex(int index)
-    {
-        if (index < 0 || index >= _shuffledColors.Length)
+        // Cube에 인덱스별 색 지정
+        for (int i = 0; i < 4; i++)
         {
-            Debug.LogError("❌ ColorSequenceManager: 잘못된 인덱스 접근!");
-            return Color.clear;
+            int idx = _shuffledIndices[i];
+            _cubes[i].material.color = ColorByIndex[idx];
         }
 
-        return _shuffledColors[index];
+        Debug.Log($"[ColorSequenceManager] 정답 인덱스: {_shuffledIndices[0]}, {_shuffledIndices[1]}, {_shuffledIndices[2]}, {_shuffledIndices[3]}");
     }
 
-    // 전체 색 배열 가져오기 (EnemyManager가 사용)
-    public Color[] GetShuffledColors()
+    // 정답 인덱스 가져오기
+    public int[] GetShuffledIndices()
     {
-        return (Color[])_shuffledColors.Clone();  // 외부 수정 방지
+        return (int[])_shuffledIndices.Clone();
+    }
+
+    // 특정 Cube의 인덱스 가져오기
+    public int GetIndexAt(int i)
+    {
+        return _shuffledIndices[i];
     }
 }

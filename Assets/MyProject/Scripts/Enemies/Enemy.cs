@@ -2,45 +2,56 @@
 
 public class Enemy : MonoBehaviour
 {
-    public bool IsDead = false;
-    public Color EnemyColor;
+    [Header("Identity")]
+    [SerializeField]
+    public int ColorIndex;   // Inspector에서 보이고, 자동 할당됨
 
-    public int OrderIndex;   // ⭐ 정답 순서 번호 (0~3)
+    public int OrderIndex;
+    public bool IsDead = false;
 
     private EnemyManager _manager;
 
     private void Awake()
     {
         _manager = FindFirstObjectByType<EnemyManager>();
+
+        // 🔥 이름 기반 ColorIndex 자동 설정
+        ApplyColorIndexByName();
     }
 
-    // 초기화
+    // 이름을 기반으로 ColorIndex 자동 할당
+    private void ApplyColorIndexByName()
+    {
+        string n = gameObject.name.ToLower();
+
+        if (n.Contains("red")) ColorIndex = 0;
+        else if (n.Contains("yellow")) ColorIndex = 1;
+        else if (n.Contains("green")) ColorIndex = 2;
+        else if (n.Contains("blue")) ColorIndex = 3;
+        else
+            Debug.LogWarning($"⚠ {gameObject.name}: 색상 이름을 알 수 없습니다. 직접 ColorIndex를 설정하세요!");
+    }
+
     public void ResetEnemy()
     {
         IsDead = false;
         gameObject.SetActive(true);
     }
 
-    // EnemyManager에서 정답으로 처리해 죽는 경우
     public void DieSuccess()
     {
-        if (IsDead)
-            return;
+        if (IsDead) return;
 
         IsDead = true;
         gameObject.SetActive(false);
 
-        if (_manager != null)
-            _manager.CheckAllEnemiesDead();
+        _manager?.CheckAllEnemiesDead();
     }
 
-    // 적이 총에 맞았을 때 호출
     public void OnHit()
     {
-        if (IsDead)
-            return;
+        if (IsDead) return;
 
-        if (_manager != null)
-            _manager.EnemyHit(this);
+        _manager?.EnemyHit(this);
     }
 }

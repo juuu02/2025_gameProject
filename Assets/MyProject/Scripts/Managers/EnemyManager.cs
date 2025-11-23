@@ -3,82 +3,58 @@
 public class EnemyManager : MonoBehaviour
 {
     public GameObject[] Enemies;   // Spawn된 Enemy Clone들
-    private int _sequenceIndex = 0;
 
-    private ColorSequenceManager _colorManager;
+    private int _sequenceIndex = 0;      // 현재 정답 체크 위치
+    private int[] _correctSequence;      // RoundManager에서 전달된 정답 배열
 
-    private RoundManager _roundManager;   // 라운드 종료 호출용
+    private RoundManager _roundManager;
 
     private void Awake()
     {
-        _colorManager = FindFirstObjectByType<ColorSequenceManager>();
         _roundManager = FindFirstObjectByType<RoundManager>();
 
-        if (_colorManager == null)
-            Debug.LogError("❌ EnemyManager: ColorSequenceManager를 찾을 수 없습니다!");
         if (_roundManager == null)
             Debug.LogError("❌ EnemyManager: RoundManager를 찾을 수 없습니다!");
+    }
+
+    // ⭐ RoundManager가 정답 배열을 넣어줌
+    public void SetCorrectSequence(int[] sequence)
+    {
+        _correctSequence = (int[])sequence.Clone();
+        _sequenceIndex = 0;
+
+        Debug.Log($"[EnemyManager] 정답 배열 세팅: {_correctSequence[0]}, {_correctSequence[1]}, {_correctSequence[2]}, {_correctSequence[3]}");
     }
 
     // ⭐ Spawn_enemy에서 호출됨
     public void SetupEnemiesWithClones(GameObject[] clones)
     {
         Enemies = clones;
-        SetupEnemies();
-    }
 
-    // ⭐ 색 적용 + 정답 순서 리셋
-    private void SetupEnemies()
-    {
-        _sequenceIndex = 0;
-
-        if (Enemies == null || Enemies.Length != 4)
+        // Enemy 초기화
+        foreach (var obj in Enemies)
         {
-            Debug.LogError("❌ EnemyManager: Enemies 배열이 비어있거나 4개가 아닙니다!");
-            return;
-        }
-
-        Color[] colors = _colorManager.GetShuffledColors();
-
-        for (int i = 0; i < Enemies.Length; i++)
-        {
-            GameObject enemyObj = Enemies[i];
-            Enemy enemy = enemyObj.GetComponent<Enemy>();
-
-            enemyObj.SetActive(true);
+            Enemy enemy = obj.GetComponent<Enemy>();
             enemy.ResetEnemy();
-
-            // 정답용 색 저장
-            enemy.EnemyColor = colors[i];
-
-            // 실제 외형 색 적용
-            ApplyColorToEnemy(enemyObj, colors[i]);
-
-            // 정답 순서 인덱스 부여
-            enemy.OrderIndex = i;
+            obj.SetActive(true);
         }
     }
 
-    private void ApplyColorToEnemy(GameObject enemyObj, Color c)
-    {
-        SkinnedMeshRenderer mesh = enemyObj.GetComponentInChildren<SkinnedMeshRenderer>();
-        if (mesh != null)
-        {
-            mesh.material.color = c;
-            return;
-        }
-
-        Renderer r = enemyObj.GetComponentInChildren<Renderer>();
-        if (r != null)
-            r.material.color = c;
-    }
-
-    // ⭐ 총알이 Enemy 맞으면 호출됨
+    // ⭐ Enemy Hit 처리
     public void EnemyHit(Enemy enemyHit)
     {
-        Color requiredColor = _colorManager.GetColorAtIndex(_sequenceIndex);
+        if (_correctSequence == null)
+        {
+            Debug.LogError("❌ EnemyManager: 정답 배열이 없습니다!");
+            return;
+        }
 
-        if (enemyHit.EnemyColor == requiredColor)
+        int requiredIndex = _correctSequence[_sequenceIndex]; // 지금 맞춰야 할 색 인덱스
+        int enemyIndex = enemyHit.ColorIndex;                 // 이 Enemy의 고유 인덱스
+
+        Debug.Log($"EnemyHit → EnemyIndex: {enemyIndex}, Required: {requiredIndex}");
+
+        if (enemyIndex == requiredIndex)
         {
             // 정답
             enemyHit.DieSuccess();
@@ -86,14 +62,17 @@ public class EnemyManager : MonoBehaviour
 
             if (_sequenceIndex >= 4)
             {
-                Debug.Log("🎉 모든 순서를 정확히 맞췄습니다!");
+                Debug.Log("🎉 모든 정답 순서 완료!");
                 _roundManager.OnAllEnemiesDefeated();
             }
         }
-     
+        else
+        {
+            Debug.Log("❌ 오답! 잘못된 Cowboy를 쐈습니다.");
+        }
     }
 
-    // Enemy가 개별적으로 죽을 때마다 호출될 수도 있음
+    // Enemy가 개별적으로 죽을 때마다 호출되는 함수
     public void CheckAllEnemiesDead()
     {
         foreach (var enemy in Enemies)

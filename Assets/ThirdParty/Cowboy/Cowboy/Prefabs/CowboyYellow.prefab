@@ -349,7 +349,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsDead: 0
   EnemyColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  OrderIndex: 0
+  OrderIndex: 1
 --- !u!114 &6387147502646618713
 MonoBehaviour:
   m_ObjectHideFlags: 0
