@@ -460,6 +460,7 @@ MonoBehaviour:
   Cube2: {fileID: 964254894}
   Cube3: {fileID: 1670401695}
   Cube4: {fileID: 1809372004}
+  _cubes: []
 --- !u!4 &428199555
 Transform:
   m_ObjectHideFlags: 0
@@ -647,7 +648,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebbda0d9389e0f74da06efbdb23a52d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemies: []
+  Enemies:
+  - {fileID: 112068, guid: b0cbcb8d43ba4d4418e251f4c09c57f2, type: 3}
+  - {fileID: 112068, guid: dbca3c6c7c393024d9b264c667757672, type: 3}
+  - {fileID: 112068, guid: 72b3a98a4846adf4ea610b4e4617f32d, type: 3}
+  - {fileID: 112068, guid: c6f8def5aadd48d4c99846835fea1364, type: 3}
 --- !u!4 &532869192
 Transform:
   m_ObjectHideFlags: 0
@@ -663,6 +668,60 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &562214276
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 562214278}
+  - component: {fileID: 562214277}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &562214277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 562214276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de0588aee5ea9e04289bd088b3881731, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab:
+  - {fileID: 112068, guid: b0cbcb8d43ba4d4418e251f4c09c57f2, type: 3}
+  - {fileID: 112068, guid: dbca3c6c7c393024d9b264c667757672, type: 3}
+  - {fileID: 112068, guid: 72b3a98a4846adf4ea610b4e4617f32d, type: 3}
+  - {fileID: 112068, guid: c6f8def5aadd48d4c99846835fea1364, type: 3}
+  spawnInterval: 2
+  positionA: {x: 5.89, y: 5.54, z: 14.76}
+  positionB: {x: -8.6, y: 5.86, z: 3.84}
+  positionC: {x: 8.89, y: 5.54, z: 14.76}
+  positionD: {x: -5.6, y: 7, z: 8}
+--- !u!4 &562214278
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 562214276}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 5.89, y: 5.54, z: 14.76}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &592573866
 GameObject:
   m_ObjectHideFlags: 0
@@ -5888,7 +5947,7 @@ GameObject:
   - component: {fileID: 844416110}
   m_Layer: 0
   m_Name: RiverBarrier
-  m_TagString: Untagged
+  m_TagString: RiverBarrier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6047,8 +6106,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea3f5312dffede349aa4010799682c1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ColorManager: {fileID: 0}
-  EnemyManager: {fileID: 0}
+  ColorManager: {fileID: 428199554}
+  EnemyManager: {fileID: 532869191}
   CurrentRound: 1
 --- !u!4 &945577470
 Transform:
@@ -17435,6 +17494,7 @@ GameObject:
   - component: {fileID: 1235574756836243350}
   - component: {fileID: 1225582102513624628}
   - component: {fileID: 1276158647755311662}
+  - component: {fileID: 1276158647755311663}
   m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
@@ -17530,6 +17590,38 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 0bd8ec2f6ae44d947b7afca8d28f4f46, type: 3}
+--- !u!114 &1276158647755311663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249087762039302754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: dcb27bf950259484ab27ffe9a7013f70, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!4 &1278564561361427044
 Transform:
   m_ObjectHideFlags: 0
@@ -51686,6 +51778,7 @@ GameObject:
   - component: {fileID: 5924885941567992015}
   - component: {fileID: 5916813846716801619}
   - component: {fileID: 5956331903406146647}
+  - component: {fileID: 5956331903406146648}
   m_Layer: 0
   m_Name: Water
   m_TagString: Untagged
@@ -52009,6 +52102,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 43.11805, y: 5.528005, z: 12.572218}
   m_Center: {x: 0, y: 0, z: -0.00000023841858}
+--- !u!114 &5956331903406146648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5930003851958508701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_OverrideArea: 1
+  m_Area: 1
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: 00000000
 --- !u!1 &5959006594146737955
 GameObject:
   m_ObjectHideFlags: 0
@@ -78043,3 +78156,4 @@ SceneRoots:
   - {fileID: 1536756579}
   - {fileID: 1603630146}
   - {fileID: 1317254189}
+  - {fileID: 562214278}

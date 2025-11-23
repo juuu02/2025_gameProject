@@ -8,8 +8,9 @@ public class ColorSequenceManager : MonoBehaviour
     public Renderer Cube3;
     public Renderer Cube4;
 
-    private Renderer[] _cubes;
+    public Renderer[] _cubes;
     private Color[] _baseColors = new Color[4];
+    private Color[] _shuffledColors = new Color[4];
 
     private void Awake()
     {
@@ -43,8 +44,19 @@ public class ColorSequenceManager : MonoBehaviour
             int rnd = Random.Range(i, shuffled.Length);
             (shuffled[i], shuffled[rnd]) = (shuffled[rnd], shuffled[i]);
         }
+        _shuffledColors = shuffled;
 
         for (int i = 0; i < _cubes.Length; i++)
             _cubes[i].material.color = shuffled[i];
+    }
+
+    public Color GetColorAtIndex(int index)
+    {
+        // 인덱스 범위 확인
+        if (index >= 0 && index < _shuffledColors.Length)
+        {
+            return _shuffledColors[index];
+        }
+        return Color.clear; // 오류 시 투명색 반환
     }
 }

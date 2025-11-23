@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using TMPro;
+using UnityEngine.AI;
 
 public class PlayerStartSequence : MonoBehaviour
 {
@@ -8,6 +9,13 @@ public class PlayerStartSequence : MonoBehaviour
     public FPSCamera FPSCamera;
     public TextMeshProUGUI CountdownText;
     public GunShoot Gun;   // ★ 추가됨
+    private Spawn_enemy _enemySpawner;
+
+    private void Awake()
+    {
+        // 씬에서 Spawn_enemy 컴포넌트를 찾아 할당
+        _enemySpawner = FindFirstObjectByType<Spawn_enemy>();
+    }
 
     private void Start()
     {
@@ -34,6 +42,7 @@ public class PlayerStartSequence : MonoBehaviour
         }
 
         CountdownText.text = "GO!";
+        _enemySpawner.SpawnAllEnemies();
         yield return new WaitForSeconds(0.5f);
 
         CountdownText.text = "";
