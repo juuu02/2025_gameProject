@@ -9,6 +9,10 @@ public class Spawn_enemy : MonoBehaviour
     public Vector3 positionC = new Vector3(0f, 5.86f, 3.84f);
     public Vector3 positionD = new Vector3(-0.5f, 5.86f, -10.5f);
 
+    public float targetXMin = -21.0f;
+    public float targetXMax = 21.0f;
+    public float targetZ = -50.0f;
+
     // -------------------------------
     // 랜덤 셔플 함수
     // -------------------------------
@@ -49,6 +53,13 @@ public class Spawn_enemy : MonoBehaviour
 
             // Instantiate Clone 생성
             GameObject clone = Instantiate(enemyToSpawn, spawnPos, transform.rotation);
+            float randomTargetX = Random.Range(targetXMin, targetXMax);
+            Vector3 targetVector = new Vector3(randomTargetX, spawnPos.y, targetZ);
+            CowBoy_control control = clone.GetComponent<CowBoy_control>();
+            if (control != null)
+            {
+                control.SetDestinationTarget(targetVector);
+            }
 
             // Clone 저장
             spawnedEnemies[i] = clone;
