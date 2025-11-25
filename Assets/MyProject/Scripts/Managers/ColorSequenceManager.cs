@@ -74,4 +74,22 @@ public class ColorSequenceManager : MonoBehaviour
     {
         return _shuffledIndices[i];
     }
+
+    // 🔥 5초 카운트다운 종료 → 큐브를 흰색으로
+    public void SetCubesToWhite()
+    {
+        for (int i = 0; i < _cubes.Length; i++)
+            _cubes[i].material.color = Color.white;
+    }
+
+    // 🔥 라운드 시작 → 셔플된 색상대로 복구
+    public void RestoreShuffledColors()
+    {
+        for (int i = 0; i < _cubes.Length; i++)
+        {
+            int idx = _shuffledIndices[i];
+            _cubes[i].material.color = ColorByIndex[idx];
+        }
+    }
+
 }

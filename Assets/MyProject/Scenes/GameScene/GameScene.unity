@@ -460,7 +460,6 @@ MonoBehaviour:
   Cube2: {fileID: 964254894}
   Cube3: {fileID: 1670401695}
   Cube4: {fileID: 1809372004}
-  _cubes: []
 --- !u!4 &428199555
 Transform:
   m_ObjectHideFlags: 0
@@ -702,7 +701,6 @@ MonoBehaviour:
   - {fileID: 112068, guid: 4433eb7e95b9eab41af95235512bce36, type: 3}
   - {fileID: 112068, guid: 257aebb4933dbaa40904e237265b4568, type: 3}
   - {fileID: 112068, guid: b51a35645913622458a66783b0dc2d61, type: 3}
-  spawnInterval: 2
   positionA: {x: 5.89, y: 5.54, z: 14.76}
   positionB: {x: -8.6, y: 5.86, z: 3.84}
   positionC: {x: 8.89, y: 5.54, z: 14.76}
@@ -6524,6 +6522,7 @@ MonoBehaviour:
   FPSCamera: {fileID: 1345284415}
   CountdownText: {fileID: 592573868}
   Gun: {fileID: 2128220988}
+  ColorManager: {fileID: 428199554}
 --- !u!1 &1120918543
 GameObject:
   m_ObjectHideFlags: 0
