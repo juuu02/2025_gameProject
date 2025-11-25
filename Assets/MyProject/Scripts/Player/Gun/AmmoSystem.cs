@@ -30,4 +30,10 @@ public class AmmoSystem : MonoBehaviour
         if (AmmoText != null)
             AmmoText.text = currentAmmo + "/" + maxAmmo;
     }
+
+    public void ResetAmmo()
+    {
+        currentAmmo = maxAmmo;
+        UpdateUI();
+    }
 }
