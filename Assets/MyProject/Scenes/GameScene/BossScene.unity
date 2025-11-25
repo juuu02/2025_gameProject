@@ -131,7 +131,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 136659237}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2af872d36c6011e46868bc6b9a40844f, type: 3}
   m_Name: 
@@ -250,7 +250,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 136659237}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d32f4a365969694dbce2d7c15faf966, type: 3}
   m_Name: 
@@ -266,7 +266,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 136659237}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 257126c58047fb74f8d632800704c1a1, type: 3}
   m_Name: 
@@ -280,6 +280,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5725646551406035520, guid: 4e730c5270939664994b6a200c14daea, type: 3}
   m_PrefabInstance: {fileID: 927109441}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &136659245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136659237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23e76976457d16946b1ebdffc8c17b11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fpsCam: {fileID: 367100639}
+  damage: 20
+  range: 200
+  fireRate: 10
+  muzzleFlash: {fileID: 915064276}
+  hitEffect: {fileID: 0}
 --- !u!1 &367100634
 GameObject:
   m_ObjectHideFlags: 0
@@ -435,7 +453,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 367100634}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 370d0a6a54b2ca5468bd19827d76b031, type: 3}
   m_Name: 
@@ -528,7 +546,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   part: 2
-  enemy: {fileID: 0}
+  boss: {fileID: 625947767}
 --- !u!136 &475981708
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -544,7 +562,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -591,7 +609,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68252e09e27c8794786504053773f095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 300
 --- !u!1 &762702165
 GameObject:
   m_ObjectHideFlags: 0
@@ -5638,6 +5656,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4917444394473167098, guid: 4e730c5270939664994b6a200c14daea, type: 3}
       insertIndex: -1
       addedObject: {fileID: 136659239}
+    - targetCorrespondingSourceObject: {fileID: 4917444394473167098, guid: 4e730c5270939664994b6a200c14daea, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 136659245}
   m_SourcePrefab: {fileID: 100100000, guid: 4e730c5270939664994b6a200c14daea, type: 3}
 --- !u!1 &963716018 stripped
 GameObject:
@@ -5657,7 +5678,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   part: 0
-  enemy: {fileID: 0}
+  boss: {fileID: 625947767}
 --- !u!135 &963716021
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5673,7 +5694,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -6164,7 +6185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   part: 2
-  enemy: {fileID: 0}
+  boss: {fileID: 625947767}
 --- !u!136 &1847115703
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -6180,7 +6201,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
