@@ -10,6 +10,7 @@ public class PlayerStartSequence : MonoBehaviour
     public TextMeshProUGUI CountdownText;
     public GunShoot Gun;   // ★ 추가됨
     private Spawn_enemy _enemySpawner;
+    public ColorSequenceManager ColorManager;
 
     private void Awake()
     {
@@ -42,6 +43,8 @@ public class PlayerStartSequence : MonoBehaviour
         }
 
         CountdownText.text = "GO!";
+        ColorManager.SetCubesToWhite();
+
         _enemySpawner.SpawnAllEnemies();
         yield return new WaitForSeconds(0.5f);
 

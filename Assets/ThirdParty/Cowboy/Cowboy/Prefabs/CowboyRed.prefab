@@ -289,7 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 496e01c838f936641af64838bdfa1c1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 3
 --- !u!136 &-1528405591685521221
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -309,10 +309,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.6
-  m_Height: 2.7
+  m_Radius: 0.5
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 1.3, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!195 &-365570913283986301
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -347,9 +347,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a28478bcfb420f4ca479e4fa01866e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsDead: 0
-  EnemyColor: {r: 1, g: 0, b: 0, a: 1}
+  ColorIndex: 0
   OrderIndex: 0
+  IsDead: 0
 --- !u!114 &-1956615577018249795
 MonoBehaviour:
   m_ObjectHideFlags: 0
