@@ -5,7 +5,7 @@ public class Shoot : MonoBehaviour
     public Camera fpsCam;
     public float damage = 20f;
     public float range = 200f;
-    public float fireRate = 10f;   // 1초에 10발
+    public float fireRate = 1f;   // 1초에 1발
     private float nextTimeToFire = 0f;
 
     public ParticleSystem muzzleFlash;
@@ -13,7 +13,7 @@ public class Shoot : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
+        if (Input.GetButtonDown("Fire1") && Time.time >= nextTimeToFire)
         {
             nextTimeToFire = Time.time + 1f / fireRate;
             Shooting();
