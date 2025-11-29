@@ -1,43 +1,73 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Spawn_Boss : MonoBehaviour
 {
-    public GameObject Boss; // Boss Prefab
+    [Header("Hierarchy Boss")]
+    public GameObject ExistingBoss; // 🔥 하이어라키에 있는 보스를 여기에 드래그하세요!
+
+    [Header("Spawn Positions")]
     public Vector3 positionA = new Vector3(5.89f, 5.54f, 14.76f);
     public Vector3 positionB = new Vector3(-8.6f, 5.86f, 3.84f);
     public Vector3 positionC = new Vector3(0f, 5.86f, 3.84f);
     public Vector3 positionD = new Vector3(-0.5f, 5.86f, -10.5f);
 
+    [Header("Boss Move Settings")]
     public float targetXMin = -21.0f;
     public float targetXMax = 21.0f;
     public float targetZ = -50.0f;
+
+    private BossManager manager;
+
+    private void Awake()
+    {
+        // BossManager 찾기 (최신 버전 호환)
+        manager = FindFirstObjectByType<BossManager>();
+
+        if (manager == null)
+            Debug.LogError("❌ Spawn_Boss: BossManager가 씬에 없습니다!");
+    }
+
+    // BossManager에서 Start() 때 호출됨
     public void SpawnBoss()
     {
-        Vector3[] spawnPositions = new Vector3[] { positionA, positionB, positionC, positionD };
+        if (ExistingBoss == null)
+        {
+            Debug.LogError("❌ Spawn_Boss: 'ExistingBoss'가 비어있습니다! 인스펙터에서 보스를 연결해주세요.");
+            return;
+        }
 
-        Vector3 spawnPos = spawnPositions[Random.Range(0, 4)];
+        // 1. 보스 활성화 (혹시 꺼져 있을까봐)
+        ExistingBoss.SetActive(true);
 
-        // Instantiate Clone 생성
-        GameObject clone = Instantiate(Boss, spawnPos, transform.rotation);
+        // 2. 랜덤 시작 위치 선정 (A, B, C, D 중 하나)
+        Vector3[] spawnPositions = { positionA, positionB, positionC, positionD };
+        Vector3 startPos = spawnPositions[Random.Range(0, spawnPositions.Length)];
+
+        // 🔥 보스 순간이동! (복제가 아님)
+        ExistingBoss.transform.position = startPos;
+        ExistingBoss.transform.rotation = transform.rotation; // 필요하다면 회전도 맞춤
+
+        // 3. 목표 지점(Target) 설정
         float randomTargetX = Random.Range(targetXMin, targetXMax);
-        Vector3 targetVector = new Vector3(randomTargetX, spawnPos.y, targetZ);
-        Boss_control control = clone.GetComponent<Boss_control>();
+        Vector3 targetVector = new Vector3(randomTargetX, startPos.y, targetZ);
+
+        Boss_control control = ExistingBoss.GetComponent<Boss_control>();
         if (control != null)
         {
             control.SetDestinationTarget(targetVector);
         }
-        
 
-        //// ⭐ EnemyManager에게 Clone 배열 넘기기
-        //BossManager manager = FindFirstObjectByType<BossManager>();
-        //if (manager != null)
-        //{
-        //    manager.SetupEnemiesWithClones();
-        //}
-        //else
-        //{
-        //    Debug.LogError("❌ EnemyManager를 찾을 수 없습니다!");
-        //}
+        // 4. BossManager에 등록
+        BossHealth bh = ExistingBoss.GetComponent<BossHealth>();
+        if (bh != null)
+        {
+            if (manager != null) manager.RegisterBoss(bh);
+        }
+        else
+        {
+            Debug.LogError("❌ Boss 오브젝트에 BossHealth 스크립트가 없습니다!");
+        }
+
+        Debug.Log($"🚀 Scene 보스 배치 완료! 시작 위치: {startPos}");
     }
 }

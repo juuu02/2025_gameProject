@@ -11,7 +11,13 @@ public enum HitPart
 public class HitBox : MonoBehaviour
 {
     public HitPart part;
-    public BossHealth boss;   // BossHealth 연결
+    public BossHealth boss;
+
+    private void Start()
+    {
+        if (boss == null)
+            boss = GetComponentInParent<BossHealth>();
+    }
 
     public void ApplyDamage(float baseDamage)
     {
@@ -19,26 +25,14 @@ public class HitBox : MonoBehaviour
 
         switch (part)
         {
-            case HitPart.Head:
-                dmg *= 2f;
-                break;
-
-            case HitPart.Body:
-                dmg *= 1f;
-                break;
-
-            case HitPart.Arm:
-                dmg *= 0.7f;
-                break;
-
-            case HitPart.Leg:
-                dmg *= 0.5f;
-                break;
+            case HitPart.Head: dmg *= 2f; break;
+            case HitPart.Body: dmg *= 1f; break;
+            case HitPart.Arm: dmg *= 0.7f; break;
+            case HitPart.Leg: dmg *= 0.5f; break;
         }
 
-        // 🔥 디버그 출력
-        Debug.Log($" Hit: {part} | Damage: {dmg}");
-
         boss.TakeDamage(dmg);
+
+        Debug.Log($"Hit: {part} | Damage: {dmg} | Boss HP: {boss.HP}");
     }
 }
