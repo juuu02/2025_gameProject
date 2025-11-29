@@ -2,22 +2,42 @@
 
 public class BossHealth : MonoBehaviour
 {
-    public float health = 200f;
+    [Header("Boss Health")]
+    public float MaxHP = 200f;
+    public float HP = 200f;
+
+    public delegate void BossDeathHandler();
+    public event BossDeathHandler OnBossDeath;
+
+    private bool _isDead = false;
+
+    void Start()
+    {
+        HP = MaxHP;
+    }
 
     public void TakeDamage(float dmg)
     {
-        health -= dmg;
+        if (_isDead) return;
 
-        // 🔥 남은 HP 디버그 출력
-        Debug.Log($"Boss HP: {health}");
+        HP -= dmg;
+        Debug.Log($"🔥 Boss HP: {HP}");
 
-        if (health <= 0f)
+        if (HP <= 0f)
+        {
             Die();
+        }
     }
 
-    void Die()
+    private void Die()
     {
-        Debug.Log("Boss Dead!");
+        if (_isDead) return;
+        _isDead = true;
+
+        Debug.Log("💀 Boss Dead!");
+
+        OnBossDeath?.Invoke();
+
         gameObject.SetActive(false);
     }
 }

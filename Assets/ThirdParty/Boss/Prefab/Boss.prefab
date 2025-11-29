@@ -2501,7 +2501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   part: 2
-  boss: {fileID: 7472770878603852365}
+  boss: {fileID: 0}
 --- !u!136 &6792587406014122565
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3349,7 +3349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   part: 0
-  boss: {fileID: 7472770878603852365}
+  boss: {fileID: 0}
 --- !u!135 &9049663528213750916
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3725,7 +3725,6 @@ GameObject:
   m_Component:
   - component: {fileID: 403189873618770829}
   - component: {fileID: 7834842497543195309}
-  - component: {fileID: 7472770878603852365}
   - component: {fileID: 3498407994035049495}
   - component: {fileID: 4666707076205846939}
   - component: {fileID: 1903763756825235578}
@@ -3779,19 +3778,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7472770878603852365
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3819722411923620214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68252e09e27c8794786504053773f095, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 200
 --- !u!195 &3498407994035049495
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3827,6 +3813,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  attackTrigger: {fileID: 0}
+  attackDelay: 1.5
+  attackTriggerTime: 0.3
+  attackDuration: 0.2
 --- !u!54 &1903763756825235578
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4181,7 +4171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   part: 3
-  boss: {fileID: 7472770878603852365}
+  boss: {fileID: 0}
 --- !u!136 &7333993267023228950
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5634,7 +5624,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   part: 1
-  boss: {fileID: 7472770878603852365}
+  boss: {fileID: 0}
 --- !u!1 &5574286880946525093
 GameObject:
   m_ObjectHideFlags: 0
@@ -7479,7 +7469,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   part: 3
-  boss: {fileID: 7472770878603852365}
+  boss: {fileID: 0}
 --- !u!136 &5581240224993067348
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -7859,7 +7849,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   part: 2
-  boss: {fileID: 7472770878603852365}
+  boss: {fileID: 0}
 --- !u!136 &5579801092515619180
 CapsuleCollider:
   m_ObjectHideFlags: 0

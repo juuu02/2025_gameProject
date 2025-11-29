@@ -62,6 +62,12 @@ public class RoundManager : MonoBehaviour
         // 다음 라운드 번호 증가
         CurrentRound++;
 
+        if (IsBossRound(CurrentRound))
+        {
+            LoadBossScene();
+            return;   // 다음 로직 진행하지 않음
+        }
+
         // 무기 리셋
         StartSequence.ResetWeaponAmmo();
 
@@ -69,9 +75,48 @@ public class RoundManager : MonoBehaviour
         StartSequence.PlayStartSequence();
     }
 
+
+    // 🔥 [추가] 총알을 쏠 때마다(또는 0발일 때) 이 함수를 호출해줘!
+    public void CheckAmmoAndGameOver(int currentAmmo)
+    {
+        // 1. 총알이 남아있으면 게임 오버 아님 -> 통과
+        if (currentAmmo > 0) return;
+
+        // 2. 총알이 0발인데, 이미 미션을 성공했다면? -> 통과 (OnAllEnemiesDefeated가 처리함)
+        if (EnemyManager.IsMissionComplete()) return;
+
+        // 3. 총알도 없고, 미션도 성공 못했음 -> 게임 오버!
+        TriggerGameOver();
+    }
+
+    // 🔥 [추가] 게임 오버 실행 함수
+    private void TriggerGameOver()
+    {
+        if (!_roundActive) return;
+        _roundActive = false;
+
+        Debug.Log("💀 GAME OVER: 총알이 다 떨어졌습니다!");
+
+        // 여기에 게임 오버 UI 띄우기 or 재시작 로직 넣기
+        // 예: UIManager.ShowGameOverPopup();
+    }
     private void UpdateRoundUI()
     {
         if (RoundText != null)
             RoundText.text = $"Round {CurrentRound}";
+    }
+
+    // 보스 라운드 판별 (4, 8, 12 ...)
+    private bool IsBossRound(int round)
+    {
+        return round % 4 == 0;
+    }
+
+    // 보스 씬 로드
+    private void LoadBossScene()
+    {
+        Debug.Log("🔥 BossScene으로 이동!");
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene("BossScene");
     }
 }

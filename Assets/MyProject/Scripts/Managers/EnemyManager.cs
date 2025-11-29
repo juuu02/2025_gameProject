@@ -83,4 +83,10 @@ public class EnemyManager : MonoBehaviour
 
         _roundManager.OnAllEnemiesDefeated();
     }
+
+    public bool IsMissionComplete()
+    {
+        // 정답을 4개 맞췄다면 true, 아니면 false 반환
+        return _sequenceIndex >= 4;
+    }
 }

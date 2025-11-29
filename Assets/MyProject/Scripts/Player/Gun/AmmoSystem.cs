@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 
 public class AmmoSystem : MonoBehaviour
@@ -8,9 +8,11 @@ public class AmmoSystem : MonoBehaviour
 
     public TMP_Text AmmoText;
     public GunShoot gun;
+    private RoundManager _roundManager;
 
     void Start()
     {
+        _roundManager = FindFirstObjectByType<RoundManager>();
         UpdateUI();
     }
 
@@ -23,6 +25,11 @@ public class AmmoSystem : MonoBehaviour
     {
         currentAmmo--;
         UpdateUI();
+
+        if (_roundManager != null)
+        {
+            _roundManager.CheckAmmoAndGameOver(currentAmmo);
+        }
     }
 
     public void UpdateUI()
