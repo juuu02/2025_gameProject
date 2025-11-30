@@ -6,11 +6,17 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 6f;
     public float gravity = -9.81f;
 
-    // ⭐ 외부에서 제어할 수 있는 스위치 추가
+    // 외부에서 제어할 수 있는 스위치
     public bool canMove = true;
 
     CharacterController controller;
     Vector3 velocity;
+
+    // 발자국 관련
+    public AudioSource footstepSource;
+    public AudioClip footstepClip;
+    public float footstepInterval = 0.45f;
+    float footstepTimer = 0f;
 
     void Start()
     {
@@ -19,15 +25,18 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // ⭐ 스위치가 켜져 있을 때만 키보드 입력을 받음
-        // 꺼져있으면 0이 되어 움직이지 않음
+        HandleMovement();
+        HandleFootsteps();
+    }
+
+    void HandleMovement()
+    {
         float x = canMove ? Input.GetAxis("Horizontal") : 0;
         float z = canMove ? Input.GetAxis("Vertical") : 0;
 
         Vector3 move = transform.right * x + transform.forward * z;
         controller.Move(move * speed * Time.deltaTime);
 
-        // --- 중력 코드는 조건문 밖에서 항상 실행됨 (이제 공중부양 안 함!) ---
         if (controller.isGrounded)
         {
             if (velocity.y < 0)
@@ -39,5 +48,29 @@ public class PlayerMovement : MonoBehaviour
         }
 
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    void HandleFootsteps()
+    {
+        // 이동 속도 계산 (중력 제외)
+        Vector3 horizontalVel = new Vector3(controller.velocity.x, 0, controller.velocity.z);
+        bool isMoving = horizontalVel.magnitude > 0.1f;
+
+        // 움직일 때만 발자국 작동
+        if (isMoving && controller.isGrounded && canMove)
+        {
+            footstepTimer += Time.deltaTime;
+
+            if (footstepTimer >= footstepInterval)
+            {
+                footstepSource.PlayOneShot(footstepClip);
+                footstepTimer = 0f;
+            }
+        }
+        else
+        {
+            // 멈추면 타이머 리셋 -> 소리 즉시 멈춤
+            footstepTimer = footstepInterval;
+        }
     }
 }
