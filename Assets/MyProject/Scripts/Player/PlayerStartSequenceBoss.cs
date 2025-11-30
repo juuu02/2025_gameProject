@@ -7,7 +7,7 @@ public class PlayerStartSequenceBoss : MonoBehaviour
     [Header("Player References")]
     public PlayerMovement Movement;
     public FPSCamera FPSCamera;
-    public GunShoot Gun;
+    public BossMapGunShoot Gun;
 
     [Header("UI")]
     public TextMeshProUGUI CountdownText;
