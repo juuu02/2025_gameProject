@@ -12,9 +12,7 @@ public class Spawn_Boss : MonoBehaviour
     public Vector3 positionD = new Vector3(-0.5f, 5.86f, -10.5f);
 
     [Header("Boss Move Settings")]
-    public float targetXMin = -21.0f;
-    public float targetXMax = 21.0f;
-    public float targetZ = -50.0f;
+    public GameObject Player;
 
     private BossManager manager;
 
@@ -45,17 +43,26 @@ public class Spawn_Boss : MonoBehaviour
 
         // 🔥 보스 순간이동! (복제가 아님)
         ExistingBoss.transform.position = startPos;
-        ExistingBoss.transform.rotation = transform.rotation; // 필요하다면 회전도 맞춤
+        ExistingBoss.transform.rotation = Quaternion.Euler(0, 180, 0);
 
         // 3. 목표 지점(Target) 설정
-        float randomTargetX = Random.Range(targetXMin, targetXMax);
-        Vector3 targetVector = new Vector3(randomTargetX, startPos.y, targetZ);
 
         Boss_control control = ExistingBoss.GetComponent<Boss_control>();
         if (control != null)
         {
-            control.SetDestinationTarget(targetVector);
+            // control.SetDestinationTarget(targetVector); // 기존 함수 호출 대신
+
+            // 🔥 수정된 SetTarget 함수 호출
+            if (Player != null)
+            {
+                control.SetTarget(Player.transform);
+            }
+            else
+            {
+                Debug.LogError("❌ Spawn_Boss: 'Player' 오브젝트가 연결되지 않았습니다!");
+            }
         }
+        // ...
 
         // 4. BossManager에 등록
         BossHealth bh = ExistingBoss.GetComponent<BossHealth>();
