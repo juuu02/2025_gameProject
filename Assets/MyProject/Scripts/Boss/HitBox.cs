@@ -21,6 +21,14 @@ public class HitBox : MonoBehaviour
 
     public void ApplyDamage(float baseDamage)
     {
+        Debug.Log($"ApplyDamage");
+
+        if (boss == null)
+        {
+            Debug.LogError($"❌ HITBOX ERROR: {gameObject.name}의 BossHealth 컴포넌트가 연결되지 않았습니다! (boss is null)");
+            return; // NullException 방지
+        }
+
         float dmg = baseDamage;
 
         switch (part)

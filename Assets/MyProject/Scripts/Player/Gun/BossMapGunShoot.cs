@@ -52,7 +52,7 @@ public class BossMapGunShoot : MonoBehaviour
 
         Ray ray = FpsCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f));
         RaycastHit hit;
-
+        
         if (Physics.Raycast(ray, out hit, 500f, layerMask))
         {
             HitBox bossHitBox = hit.collider.GetComponent<HitBox>();
@@ -66,6 +66,12 @@ public class BossMapGunShoot : MonoBehaviour
             {
                 Instantiate(HitEffect, hit.point, Quaternion.LookRotation(hit.normal));
             }
+        }
+
+        else
+        {
+            // 🔥 Raycast가 아무것도 맞추지 못했을 때 (피격 실패)
+            Debug.Log("Raycast Missed everything.");
         }
     }
 }
