@@ -6078,7 +6078,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Movement: {fileID: 974507824}
   FPSCamera: {fileID: 121557450}
-  Gun: {fileID: 0}
+  Gun: {fileID: 1400100335}
   CountdownText: {fileID: 1007293589}
   RoundText: {fileID: 580398453}
   RoundTextDuration: 2
