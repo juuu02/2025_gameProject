@@ -6083,6 +6083,7 @@ MonoBehaviour:
   RoundText: {fileID: 580398453}
   RoundTextDuration: 2
   PlayerStartPoint: {fileID: 721493051}
+  BossControl: {fileID: 1305533625}
 --- !u!114 &974507845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6270,6 +6271,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3819722411923620214, guid: 6c34a92aa9125b4428baa8fb9fc3f8c4, type: 3}
   m_PrefabInstance: {fileID: 911637266350859088}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1305533625 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4666707076205846939, guid: 6c34a92aa9125b4428baa8fb9fc3f8c4, type: 3}
+  m_PrefabInstance: {fileID: 911637266350859088}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1305533622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e218f4bac4ea1ba4f89aa30766415905, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1400100327 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4917444394473167098, guid: 4e730c5270939664994b6a200c14daea, type: 3}

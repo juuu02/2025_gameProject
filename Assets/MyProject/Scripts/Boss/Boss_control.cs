@@ -10,6 +10,7 @@ public class Boss_control : MonoBehaviour
     [Header("Movement")]
     public float speed = 5.0f;
     private Transform targetTransform; // 🔥 플레이어의 Transform을 받을 변수
+    public bool canMove = false;
 
     public float attackStartDistance = 5.0f;
 
@@ -45,7 +46,7 @@ public class Boss_control : MonoBehaviour
     // Update에서 지속적으로 플레이어를 따라가도록 설정
     void Update()
     {
-        if (targetTransform == null || !isChasing)
+        if (!canMove || targetTransform == null || !isChasing)
             return;
 
         // 보스와 플레이어 사이의 거리 계산
