@@ -44,20 +44,9 @@ public class BossManager : MonoBehaviour
         Debug.Log("🔥 보스 사망 → 다음 라운드로 진행!");
 
         // ⭐ BossScene에서는 RoundManager가 씬에 없음 → GameScene에서 찾도록 로직 추가
-        RoundManager rm = FindAnyObjectByType<RoundManager>();
+        RoundManager.NextRoundNumber++;
 
-        if (rm != null)
-        {
-            // ✔ Round 증가
-            rm.CurrentRound++;
-        }
-        else
-        {
-            Debug.LogWarning("⚠️ RoundManager를 찾지 못했습니다. GameScene에서 새로 시작합니다.");
-        }
-
-        // ✔ GameScene으로 이동 (RoundManager가 StartSequence로 다음 라운드 준비)
-        SceneManager.LoadScene("GameScene");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
     }
 
     private void HandlePlayerDeath()

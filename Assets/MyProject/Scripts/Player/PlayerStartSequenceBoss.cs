@@ -7,7 +7,7 @@ public class PlayerStartSequenceBoss : MonoBehaviour
     [Header("Player References")]
     public PlayerMovement Movement;
     public FPSCamera FPSCamera;
-    public GunShoot Gun;
+    public BossMapGunShoot Gun;
 
     [Header("UI")]
     public TextMeshProUGUI CountdownText;
@@ -19,12 +19,21 @@ public class PlayerStartSequenceBoss : MonoBehaviour
     [Header("Start Point")]
     public Transform PlayerStartPoint;
 
+    [Header("Boss Control")]
+    public Boss_control BossControl;
+
     private void Start()
     {
         // 1. 게임 시작하자마자 플레이어 얼리기
         Movement.canMove = false;
         FPSCamera.enabled = false;
         if (Gun != null) Gun.canShootFromStart = false;
+
+        if (BossControl != null)
+        {
+            BossControl.canMove = false;
+            Debug.Log("🔒 보스 움직임 잠금.");
+        }
 
         // 🔥 [수정] CountdownText만 끄고, RoundText는 켜둡니다!
         if (CountdownText != null) CountdownText.gameObject.SetActive(false);
@@ -76,6 +85,12 @@ public class PlayerStartSequenceBoss : MonoBehaviour
         Movement.canMove = true;
         FPSCamera.enabled = true;
         if (Gun != null) Gun.canShootFromStart = true;
+
+        if (BossControl != null)
+        {
+            BossControl.canMove = true;
+            Debug.Log("🔓 보스 움직임 활성화 완료.");
+        }
 
         Debug.Log("🚀 보스전 시작! 플레이어 조작 활성화 완료.");
     }

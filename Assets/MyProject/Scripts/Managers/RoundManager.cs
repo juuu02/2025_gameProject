@@ -4,6 +4,8 @@ using TMPro;
 
 public class RoundManager : MonoBehaviour
 {
+    public static int NextRoundNumber = 1;
+
     [Header("Managers")]
     public ColorSequenceManager ColorManager;
     public EnemyManager EnemyManager;
@@ -12,10 +14,14 @@ public class RoundManager : MonoBehaviour
     public Transform PlayerStartPoint;
 
     [Header("Round Info")]
-    public int CurrentRound = 1;
+    public int CurrentRound;
 
     private bool _roundActive = false;
-
+    void Awake()
+    {
+        // 🔥 다음 라운드 번호로 현재 라운드를 설정
+        CurrentRound = NextRoundNumber;
+    }
     void Start()
     {
         // 첫 라운드 시작
@@ -61,6 +67,7 @@ public class RoundManager : MonoBehaviour
     {
         // 다음 라운드 번호 증가
         CurrentRound++;
+        NextRoundNumber = CurrentRound;
 
         if (IsBossRound(CurrentRound))
         {
@@ -109,7 +116,7 @@ public class RoundManager : MonoBehaviour
     // 보스 라운드 판별 (4, 8, 12 ...)
     private bool IsBossRound(int round)
     {
-        return round % 4 == 0;
+        return round % 2 == 0;
     }
 
     // 보스 씬 로드

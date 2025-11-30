@@ -13,6 +13,11 @@ public class CowBoy_control : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+
+        if (agent != null)
+        {
+            agent.speed = speed;
+        }
     }
 
     public void SetDestinationTarget(Vector3 target)
