@@ -47,9 +47,9 @@ public class PlayerStartSequence : MonoBehaviour
         // 이때 내부적으로 셔플이 일어나고 색이 칠해집니다.
         ColorManager.ShuffleAndApply();
 
-        // 3. 카운트다운 5초 진행 (플레이어는 이때 색을 외웁니다)
+        // 3. 카운트다운 3초 진행 (플레이어는 이때 색을 외웁니다)
         CountdownText.gameObject.SetActive(true);
-        for (int i = 5; i > 0; i--)
+        for (int i = 3; i > 0; i--)
         {
             CountdownText.text = i.ToString();
             yield return new WaitForSeconds(1f);
