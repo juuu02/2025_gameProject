@@ -6,10 +6,7 @@ public class Spawn_Boss : MonoBehaviour
     public GameObject ExistingBoss; // 🔥 하이어라키에 있는 보스를 여기에 드래그하세요!
 
     [Header("Spawn Positions")]
-    public Vector3 positionA = new Vector3(5.89f, 5.54f, 14.76f);
-    public Vector3 positionB = new Vector3(-8.6f, 5.86f, 3.84f);
-    public Vector3 positionC = new Vector3(0f, 5.86f, 3.84f);
-    public Vector3 positionD = new Vector3(-0.5f, 5.86f, -10.5f);
+    public Vector3 position = new Vector3(3.25f, 3.29f, -5.389f);
 
     [Header("Boss Move Settings")]
     public GameObject Player;
@@ -37,9 +34,7 @@ public class Spawn_Boss : MonoBehaviour
         // 1. 보스 활성화 (혹시 꺼져 있을까봐)
         ExistingBoss.SetActive(true);
 
-        // 2. 랜덤 시작 위치 선정 (A, B, C, D 중 하나)
-        Vector3[] spawnPositions = { positionA, positionB, positionC, positionD };
-        Vector3 startPos = spawnPositions[Random.Range(0, spawnPositions.Length)];
+        Vector3 startPos = position;
 
         // 🔥 보스 순간이동! (복제가 아님)
         ExistingBoss.transform.position = startPos;
