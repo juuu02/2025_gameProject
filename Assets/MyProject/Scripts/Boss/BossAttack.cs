@@ -17,31 +17,6 @@ public class BossAttack : MonoBehaviour
     {
         _canDamage = false;
     }
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    // 🔥 1. 공격 범위 진입 시점을 확인
-    //    Debug.Log($"[BossAttack] Collider Entered: {other.gameObject.name} (CanDamage: {_canDamage})");
-
-    //    if (!_canDamage) return;
-
-    //    // 🔥 2. 플레이어 태그 일치 여부 확인
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        Debug.Log("[BossAttack] Player Tag Matched. Trying to get PlayerHealth.");
-
-    //        PlayerHealth hp = other.GetComponent<PlayerHealth>();
-    //        if (hp != null)
-    //        {
-    //            hp.TakeDamage(Damage);
-    //            Debug.Log("💥 보스 공격 성공! " + Damage + " 피해"); // 성공 메시지
-    //        }
-    //        else
-    //        {
-    //            // 🔥 3. PlayerHealth 컴포넌트가 없는 경우를 확인
-    //            Debug.LogError("❌ [BossAttack] Player Tag는 맞지만, PlayerHealth 컴포넌트를 찾을 수 없습니다!");
-    //        }
-    //    }
-    //}
     private void OnTriggerStay(Collider other)
     {
         // 1. 공격 타이밍이 아니거나, 이미 이번 공격에 피해를 입혔다면 무시
@@ -49,6 +24,7 @@ public class BossAttack : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
+            Debug.Log($"[DEBUG: TRIGGER] 호출! 닿은 대상: {other.gameObject.name}, Tag: {other.gameObject.tag}"); 
             PlayerHealth hp = other.GetComponent<PlayerHealth>();
             if (hp != null)
             {
@@ -57,6 +33,11 @@ public class BossAttack : MonoBehaviour
 
                 // 🔥 한 번 피해를 입힌 후 바로 플래그 설정 (중복 피해 방지)
                 _hasDealtDamage = true;
+            }
+            else
+            {
+                // 🔥 [추가] 태그는 'Player'인데 Health 컴포넌트가 없을 때
+                Debug.LogError($"❌ [ERROR] Player Tag가 맞는데 PlayerHealth 컴포넌트가 없습니다! 오브젝트: {other.gameObject.name}");
             }
         }
     }

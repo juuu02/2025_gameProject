@@ -89,6 +89,7 @@ public class Boss_control : MonoBehaviour
     private System.Collections.IEnumerator AttackRoutine()
     {
         isAttacking = true;
+        Debug.Log("✅ [CONTROL] AttackRoutine 시작. isAttacking=true");
 
         // 보스가 플레이어를 바라보게 합니다.
         Vector3 lookPos = targetTransform.position - transform.position;
@@ -103,18 +104,22 @@ public class Boss_control : MonoBehaviour
 
             // Attack 애니메이션 트리거
             animator.SetTrigger("Attack");
+            Debug.Log("➡️ [CONTROL] 'Attack' 애니메이션 트리거 발동.");
 
             // 공격 타이밍까지 대기
+            Debug.Log("⏳ [CONTROL] " + attackTriggerTime + "초 대기 시작.");
             yield return new WaitForSeconds(attackTriggerTime);
 
             // 데미지 ON
             attackTrigger.EnableDamage();
+            Debug.Log("💥 [CONTROL] EnableDamage() 호출 완료! _canDamage=TRUE");
 
             // 짧은 데미지 적용 시간
             yield return new WaitForSeconds(attackDuration);
 
             // 데미지 OFF
             attackTrigger.DisableDamage();
+            Debug.Log("⬇️ [CONTROL] DisableDamage() 호출 완료.");
 
             float timeSpent = Time.time - startTime;
             float timeToWait = attackAnimationLength - timeSpent;
