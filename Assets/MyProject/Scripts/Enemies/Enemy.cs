@@ -4,7 +4,7 @@ public class Enemy : MonoBehaviour
 {
     [Header("Identity")]
     [SerializeField]
-    public int ColorIndex;   // Inspector에서 보이고, 자동 할당됨
+    public int ColorIndex;   // Inspector에서 확인 가능
 
     public int OrderIndex;
     public bool IsDead = false;
@@ -14,22 +14,29 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         _manager = FindFirstObjectByType<EnemyManager>();
-
-        // 🔥 이름 기반 ColorIndex 자동 설정
         ApplyColorIndexByName();
     }
 
-    // 이름을 기반으로 ColorIndex 자동 할당
     private void ApplyColorIndexByName()
     {
         string n = gameObject.name.ToLower();
 
-        if (n.Contains("red")) ColorIndex = 0;
-        else if (n.Contains("yellow")) ColorIndex = 1;
-        else if (n.Contains("green")) ColorIndex = 2;
-        else if (n.Contains("blue")) ColorIndex = 3;
+        // 실수로 0으로 초기화되는 걸 방지하기 위해 -1로 시작
+        int tempIndex = -1;
+
+        if (n.Contains("red")) tempIndex = 0;
+        else if (n.Contains("yellow")) tempIndex = 1;
+        else if (n.Contains("green")) tempIndex = 2;
+        else if (n.Contains("blue")) tempIndex = 3;
+
+        if (tempIndex != -1)
+        {
+            ColorIndex = tempIndex;
+        }
         else
-            Debug.LogWarning($"⚠ {gameObject.name}: 색상 이름을 알 수 없습니다. 직접 ColorIndex를 설정하세요!");
+        {
+            Debug.LogError($"🔥 {gameObject.name}: 이름에 색깔(Red, Yellow, Green, Blue)이 없어서 Index 설정 실패! 현재 Index: {ColorIndex}");
+        }
     }
 
     public void ResetEnemy()
@@ -45,13 +52,25 @@ public class Enemy : MonoBehaviour
         IsDead = true;
         gameObject.SetActive(false);
 
-        _manager?.CheckAllEnemiesDead();
+        // 매니저가 없을 경우를 대비해 null 체크
+        if (_manager != null)
+            _manager.CheckAllEnemiesDead();
     }
 
+    // EnemyHealth에서 호출하는 함수
     public void OnHit()
     {
         if (IsDead) return;
 
-        _manager?.EnemyHit(this);
+        Debug.Log($"💥 {gameObject.name} 피격 신호 받음! (ColorIndex: {ColorIndex})");
+
+        if (_manager != null)
+        {
+            _manager.EnemyHit(this);
+        }
+        else
+        {
+            Debug.LogError("❌ EnemyManager를 찾을 수 없습니다!");
+        }
     }
 }

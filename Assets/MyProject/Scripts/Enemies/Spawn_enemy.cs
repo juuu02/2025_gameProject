@@ -34,9 +34,10 @@ public class Spawn_enemy : MonoBehaviour
     }
 
     // -------------------------------
-    // 핵심: 인스턴스 생성 + EnemyManager에 Clone 전달
+    // 핵심 수정: void -> GameObject[] 로 변경
+    // 매니저가 부르면 적을 만들고, 그 적들을 "리턴" 해줍니다.
     // -------------------------------
-    public void SpawnAllEnemies()
+    public GameObject[] SpawnAllEnemies()
     {
         Vector3[] spawnPositions = new Vector3[] { positionA, positionB, positionC, positionD };
 
@@ -55,9 +56,11 @@ public class Spawn_enemy : MonoBehaviour
             GameObject clone = Instantiate(enemyToSpawn, spawnPos, transform.rotation);
             float randomTargetX = Random.Range(targetXMin, targetXMax);
             Vector3 targetVector = new Vector3(randomTargetX, spawnPos.y, targetZ);
+
             CowBoy_control control = clone.GetComponent<CowBoy_control>();
             if (control != null)
             {
+                // 목표 위치만 설정 (속도는 아직!)
                 control.SetDestinationTarget(targetVector);
             }
 
@@ -65,15 +68,7 @@ public class Spawn_enemy : MonoBehaviour
             spawnedEnemies[i] = clone;
         }
 
-        // ⭐ EnemyManager에게 Clone 배열 넘기기
-        EnemyManager manager = FindFirstObjectByType<EnemyManager>();
-        if (manager != null)
-        {
-            manager.SetupEnemiesWithClones(spawnedEnemies);
-        }
-        else
-        {
-            Debug.LogError("❌ EnemyManager를 찾을 수 없습니다!");
-        }
+        // ⭐ 변경됨: 직접 EnemyManager를 부르지 않고, RoundManager에게 배열을 줍니다.
+        return spawnedEnemies;
     }
 }
