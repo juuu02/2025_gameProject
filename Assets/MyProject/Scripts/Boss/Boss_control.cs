@@ -85,37 +85,40 @@ public class Boss_control : MonoBehaviour
             StartCoroutine(AttackRoutine());
         }
     }
-
     private System.Collections.IEnumerator AttackRoutine()
     {
         isAttacking = true;
 
-        // 보스가 플레이어를 바라보게 합니다.
-        Vector3 lookPos = targetTransform.position - transform.position;
-        lookPos.y = 0; // Y축 회전만 필요
-        Quaternion rotation = Quaternion.LookRotation(lookPos);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 5f);
-
-        // 공격 애니메이션이 끝날 때까지 무한 반복 (공격 거리 유지 시)
-        while (Vector3.Distance(transform.position, targetTransform.position) <= agent.stoppingDistance + 0.5f)
+        // 플레이어가 공격 사거리 안에 있는 동안 반복
+        while (targetTransform != null && Vector3.Distance(transform.position, targetTransform.position) <= agent.stoppingDistance + 0.5f)
         {
+            // 1. 공격 직전에 플레이어를 바라보도록 회전을 즉시 완료합니다.
+            Vector3 lookPos = targetTransform.position - transform.position;
+            lookPos.y = 0; // Y축 회전만 필요
+            if (lookPos != Vector3.zero) // Look direction이 유효한 경우에만 회전
+            {
+                Quaternion rotation = Quaternion.LookRotation(lookPos);
+                transform.rotation = rotation; // Slerp 대신 즉시 회전 적용
+            }
+
             float startTime = Time.time;
 
-            // Attack 애니메이션 트리거
+            // 2. Attack 애니메이션 트리거
             animator.SetTrigger("Attack");
 
-            // 공격 타이밍까지 대기
+            // 3. 공격 타이밍까지 대기 (데미지 전)
             yield return new WaitForSeconds(attackTriggerTime);
 
-            // 데미지 ON
+            // 4. 데미지 ON
             attackTrigger.EnableDamage();
 
-            // 짧은 데미지 적용 시간
+            // 5. 짧은 데미지 적용 시간
             yield return new WaitForSeconds(attackDuration);
 
-            // 데미지 OFF
+            // 6. 데미지 OFF
             attackTrigger.DisableDamage();
 
+            // 7. 남은 애니메이션 재생 시간을 기다립니다. (공격 애니메이션 길이 보장)
             float timeSpent = Time.time - startTime;
             float timeToWait = attackAnimationLength - timeSpent;
 
@@ -124,11 +127,58 @@ public class Boss_control : MonoBehaviour
                 yield return new WaitForSeconds(timeToWait);
             }
 
-            // 다음 공격까지 기다리기
+            // 8. 다음 공격까지 기다리기 (공격 딜레이)
             yield return new WaitForSeconds(attackDelay);
         }
 
         // 플레이어가 공격 사거리에서 벗어나면 추적 상태로 돌아감
         isAttacking = false;
+        // isAttacking이 false로 설정된 후, Update 함수가 다음 프레임에 NavMeshAgent를 다시 활성화하고 추적을 시작할 것입니다.
     }
+
+    //private System.Collections.IEnumerator AttackRoutine()
+    //{
+    //    isAttacking = true;
+
+    //    // 보스가 플레이어를 바라보게 합니다.
+    //    Vector3 lookPos = targetTransform.position - transform.position;
+    //    lookPos.y = 0; // Y축 회전만 필요
+    //    Quaternion rotation = Quaternion.LookRotation(lookPos);
+    //    transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 5f);
+
+    //    // 공격 애니메이션이 끝날 때까지 무한 반복 (공격 거리 유지 시)
+    //    while (Vector3.Distance(transform.position, targetTransform.position) <= agent.stoppingDistance + 0.5f)
+    //    {
+    //        float startTime = Time.time;
+
+    //        // Attack 애니메이션 트리거
+    //        animator.SetTrigger("Attack");
+
+    //        // 공격 타이밍까지 대기
+    //        yield return new WaitForSeconds(attackTriggerTime);
+
+    //        // 데미지 ON
+    //        attackTrigger.EnableDamage();
+
+    //        // 짧은 데미지 적용 시간
+    //        yield return new WaitForSeconds(attackDuration);
+
+    //        // 데미지 OFF
+    //        attackTrigger.DisableDamage();
+
+    //        float timeSpent = Time.time - startTime;
+    //        float timeToWait = attackAnimationLength - timeSpent;
+
+    //        if (timeToWait > 0)
+    //        {
+    //            yield return new WaitForSeconds(timeToWait);
+    //        }
+
+    //        // 다음 공격까지 기다리기
+    //        yield return new WaitForSeconds(attackDelay);
+    //    }
+
+    //    // 플레이어가 공격 사거리에서 벗어나면 추적 상태로 돌아감
+    //    isAttacking = false;
+    //}
 }

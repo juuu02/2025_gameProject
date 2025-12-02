@@ -160,7 +160,7 @@ public class RoundManager : MonoBehaviour
 
     private bool IsBossRound(int round)
     {
-        return round % 2 == 0;
+        return round % 4 == 0;
     }
 
     private void LoadBossScene()

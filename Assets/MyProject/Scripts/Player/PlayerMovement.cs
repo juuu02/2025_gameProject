@@ -12,12 +12,6 @@ public class PlayerMovement : MonoBehaviour
     CharacterController controller;
     Vector3 velocity;
 
-    // 발자국 관련
-    public AudioSource footstepSource;
-    public AudioClip footstepClip;
-    public float footstepInterval = 0.45f;
-    float footstepTimer = 0f;
-
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -26,7 +20,6 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         HandleMovement();
-        HandleFootsteps();
     }
 
     void HandleMovement()
@@ -48,29 +41,5 @@ public class PlayerMovement : MonoBehaviour
         }
 
         controller.Move(velocity * Time.deltaTime);
-    }
-
-    void HandleFootsteps()
-    {
-        // 이동 속도 계산 (중력 제외)
-        Vector3 horizontalVel = new Vector3(controller.velocity.x, 0, controller.velocity.z);
-        bool isMoving = horizontalVel.magnitude > 0.1f;
-
-        // 움직일 때만 발자국 작동
-        if (isMoving && controller.isGrounded && canMove)
-        {
-            footstepTimer += Time.deltaTime;
-
-            if (footstepTimer >= footstepInterval)
-            {
-                footstepSource.PlayOneShot(footstepClip);
-                footstepTimer = 0f;
-            }
-        }
-        else
-        {
-            // 멈추면 타이머 리셋 -> 소리 즉시 멈춤
-            footstepTimer = footstepInterval;
-        }
     }
 }
